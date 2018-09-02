@@ -589,7 +589,7 @@ class pear_rest
     http://pear.php.net/dtd/rest.allmaintainers.xsd">' . "\n";
         // package information
         require_once 'Damblan/Karma.php';
-        $karma = &new Damblan_Karma($GLOBALS['dbh']);
+        $karma = new Damblan_Karma($GLOBALS['dbh']);
         foreach ($maintainers as $maintainer) {
             if (!$karma->has($maintainer['handle'], 'pear.dev')) {
                 continue;
