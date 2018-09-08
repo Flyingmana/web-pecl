@@ -33,6 +33,7 @@ if (isset($_SERVER['PEAR_TMPDIR'])) {
  */
 if (isset($_SERVER['PEAR_DATABASE_DSN'])) {
     define('PEAR_DATABASE_DSN', $_SERVER['PEAR_DATABASE_DSN']);
+    define('PECL_DB_DSN', $_SERVER['PECL_DB_DSN']);
 } else {
     define('PECL_DB_USER', 'pear');
     define('PECL_DB_PASSWORD', 'pear');
