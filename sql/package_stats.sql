@@ -11,7 +11,7 @@ CREATE TABLE `package_stats` (
   `pid` int(11) NOT NULL default '0',
   `rid` int(11) NOT NULL default '0',
   `cid` int(11) NOT NULL default '0',
-  `last_dl` datetime NOT NULL default '0000-00-00 00:00:00',
+  `last_dl` datetime NOT NULL default '1000-01-01 00:00:00',
   PRIMARY KEY  (`rid`,`pid`),
   INDEX (`package`),
   INDEX (`dl_number`)

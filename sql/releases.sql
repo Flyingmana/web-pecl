@@ -13,7 +13,7 @@ CREATE TABLE `releases` (
   `license` varchar(20) default NULL,
   `summary` text,
   `description` text,
-  `releasedate` datetime NOT NULL default '0000-00-00 00:00:00',
+  `releasedate` datetime NOT NULL default '1000-01-01 00:00:00',
   `releasenotes` text,
   `packagefile` text,
   PRIMARY KEY  (`id`),

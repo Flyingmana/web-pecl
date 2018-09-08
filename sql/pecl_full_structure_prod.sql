@@ -25,7 +25,7 @@ DROP TABLE IF EXISTS `aggregated_package_stats`;
 CREATE TABLE `aggregated_package_stats` (
   `package_id` int(11) NOT NULL DEFAULT '0',
   `release_id` int(11) NOT NULL DEFAULT '0',
-  `yearmonth` date NOT NULL DEFAULT '0000-00-00',
+  `yearmonth` date NOT NULL DEFAULT '1000-01-01',
   `downloads` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`release_id`,`yearmonth`),
   KEY `package_id` (`package_id`),
@@ -183,7 +183,7 @@ CREATE TABLE `karma` (
   `user` varchar(20) NOT NULL DEFAULT '',
   `level` varchar(20) NOT NULL DEFAULT '',
   `granted_by` varchar(20) NOT NULL DEFAULT '',
-  `granted_at` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `granted_at` datetime NOT NULL DEFAULT '1000-01-01 00:00:00',
   PRIMARY KEY (`id`),
   KEY `user` (`user`),
   KEY `level` (`level`)
@@ -298,7 +298,7 @@ CREATE TABLE `package_stats` (
   `pid` int(11) NOT NULL DEFAULT '0',
   `rid` int(11) NOT NULL DEFAULT '0',
   `cid` int(11) NOT NULL DEFAULT '0',
-  `last_dl` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `last_dl` datetime NOT NULL DEFAULT '1000-01-01 00:00:00',
   PRIMARY KEY (`rid`,`pid`),
   KEY `package` (`package`),
   KEY `dl_number` (`dl_number`)
@@ -368,7 +368,7 @@ CREATE TABLE `releases` (
   `license` varchar(20) DEFAULT NULL,
   `summary` text,
   `description` text,
-  `releasedate` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `releasedate` datetime NOT NULL DEFAULT '1000-01-01 00:00:00',
   `releasenotes` text,
   `packagefile` text,
   PRIMARY KEY (`id`),

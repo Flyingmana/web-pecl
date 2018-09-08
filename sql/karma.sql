@@ -9,7 +9,7 @@ CREATE TABLE `karma` (
   `user` varchar(20) NOT NULL default '',
   `level` varchar(20) NOT NULL default '',
   `granted_by` varchar(20) NOT NULL default '',
-  `granted_at` datetime NOT NULL default '0000-00-00 00:00:00',
+  `granted_at` datetime NOT NULL default '1000-01-01 00:00:00',
   PRIMARY KEY  (`id`),
   INDEX (`user`),
   INDEX (`level`)
