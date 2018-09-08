@@ -12,4 +12,4 @@ CREATE TABLE `aggregated_package_stats` (
   PRIMARY KEY  (`release_id`,`yearmonth`),
   KEY `package_id` (`package_id`),
   KEY `downloads` (`downloads`)
-)
+);
