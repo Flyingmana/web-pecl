@@ -85,6 +85,9 @@ function renumber_visitations($id, $parent = null)
     } else {
         $left = $dbh->getOne("select cat_right from categories where id = $parent");
     }
+    if (!is_numeric($left)) {
+        $left = 0;
+    }
     $right = $left + 1;
     // update my self
     $err = $dbh->query("update categories
