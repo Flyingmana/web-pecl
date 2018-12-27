@@ -150,7 +150,7 @@ class category
      * @param array
      * @return mixed ID of the category or PEAR error object
      */
-    function add($data)
+    static function add($data)
     {
         global $dbh;
         $name = $data['name'];
@@ -184,7 +184,7 @@ class category
      * @param  string  $desc Category Description
      * @return mixed         True on success, pear_error otherwise
      */
-    function update($id, $name, $desc = '')
+    static function update($id, $name, $desc = '')
     {
         return $GLOBALS['dbh']->query(sprintf('UPDATE categories SET name = %s, description = %s WHERE id = %d',
                                               $GLOBALS['dbh']->quote($name),
@@ -197,7 +197,7 @@ class category
      *
      * @param integer $id Cateogry ID
      */
-    function delete($id)
+    static function delete($id)
     {
     /*
         if ($GLOBALS['dbh']->query('SELECT COUNT(*) FROM categories WHERE parent = ' . (int)$id) > 0) {
@@ -240,7 +240,7 @@ class category
      *
      * @return array
      */
-    function listAll()
+    static function listAll()
     {
         global $dbh;
         return $dbh->getAll("SELECT * FROM categories ORDER BY name",
@@ -256,7 +256,7 @@ class category
      * @param string $category
      * @return array
      */
-    function listPackages($category)
+    static function listPackages($category)
     {
         global $dbh;
         $query = 'SELECT
@@ -280,7 +280,7 @@ class category
      * @param  string Name of the category
      * @return array
      */
-    function getRecent($n, $category)
+    static function getRecent($n, $category)
     {
         global $dbh;
         $recent = array();
@@ -316,7 +316,7 @@ class category
      * @param  string Name of the category
      * @return  boolean
      */
-    function isValid($category)
+    static function isValid($category)
     {
         global $dbh;
         $query = "SELECT id FROM categories WHERE name = ?";
@@ -346,7 +346,7 @@ class package
      * @param array
      * @return mixed ID of new package or PEAR error object
      */
-    function add($data)
+    static function add($data)
     {
         global $dbh, $pear_rest;
         // name, category
@@ -408,7 +408,7 @@ class package
      * @param string|false installed version of this package
      * @return bool|array
      */
-    function getDownloadURL($packageinfo, $prefstate = 'stable',
+    static function getDownloadURL($packageinfo, $prefstate = 'stable',
                             $installed = false)
     {
         if (!isset($packageinfo['package'])) {
@@ -482,7 +482,7 @@ class package
      * @param string     release version
      * @return string|PEAR_Error|null package.xml contents from this release
      */
-    function getPackageFile($package, $version)
+    static function getPackageFile($package, $version)
     {
         global $dbh;
         if (is_numeric($package)) {
@@ -533,7 +533,7 @@ class package
      * @param string installed version of this dependency
      * @return bool|array
      */
-    function getDepDownloadURL($xsdversion, $dependency, $deppackage,
+    static function getDepDownloadURL($xsdversion, $dependency, $deppackage,
                                $prefstate = 'stable', $installed = false)
     {
         $info = package::info($dependency['name'], 'releases', true);
@@ -663,7 +663,7 @@ class package
      * @param  boolean Should PEAR packages also be taken into account?
      * @return mixed
      */
-    function info($pkg, $field = null, $allow_pear = false)
+    static function info($pkg, $field = null, $allow_pear = false)
     {
         global $dbh;
 
@@ -784,7 +784,7 @@ class package
     /**
      *
      */
-    function search($fragment, $summary = false, $released_only = true, $stable_only = true,
+    static function search($fragment, $summary = false, $released_only = true, $stable_only = true,
                     $include_pear = false)
     {
         $all = package::listAll($released_only, $stable_only, $include_pear);
@@ -818,7 +818,7 @@ class package
      * @static
      * @return array
      */
-    function listAllNames()
+    static function listAllNames()
     {
         global $dbh;
 
@@ -837,7 +837,7 @@ class package
      * @param boolean List also PEAR packages
      * @return array
      */
-    function listAll($released_only = true, $stable_only = true, $include_pear = false)
+    static function listAll($released_only = true, $stable_only = true, $include_pear = false)
     {
         global $dbh;
 
@@ -957,7 +957,7 @@ class package
      * @return array
      * @static
      */
-    function listAllwithReleases()
+    static function listAllwithReleases()
     {
         global $dbh;
 
@@ -993,7 +993,7 @@ class package
      * @param  string Only list release with specific state (Optional)
      * @return array
      */
-    function listLatestReleases($state = '')
+    static function listLatestReleases($state = '')
     {
         global $dbh;
         $query =
@@ -1041,7 +1041,7 @@ class package
      * @param array Array containing the currently installed packages
      * @return array
      */
-    function listUpgrades($currently_installed)
+    static function listUpgrades($currently_installed)
     {
         global $dbh;
         if (sizeof($currently_installed) == 0) {
@@ -1079,7 +1079,7 @@ class package
      * @param array $data Assoc in the form 'field' => 'value'.
      * @return mixed True or PEAR_Error
      */
-    function updateInfo($pkgid, $data)
+    static function updateInfo($pkgid, $data)
     {
         global $dbh, $auth_user;
         $package_id = package::info($pkgid, 'id');
@@ -1122,7 +1122,7 @@ class package
      * @param  string Name of the package
      * @return array  List of package that depend on $package
      */
-    function getDependants($package) {
+    static function getDependants($package) {
         global $dbh;
 
         $query = "SELECT p.name AS p_name, d.* FROM deps d, packages p " .
@@ -1142,7 +1142,7 @@ class package
      * @param  string Name of the package
      * @return array
      */
-    function getRecent($n, $package)
+    static function getRecent($n, $package)
     {
         global $dbh;
         $recent = array();
@@ -1178,7 +1178,7 @@ class package
      * @param  string Name of the package
      * @return  boolean
      */
-    function isValid($package)
+    static function isValid($package)
     {
         global $dbh;
          $query = "SELECT id FROM packages WHERE package_type = 'pecl' AND approved = 1 AND name = ?";
@@ -1196,7 +1196,7 @@ class package
      * @param  int ID of the package
      * @return array
      */
-    function getNotes($package)
+    static function getNotes($package)
     {
         global $dbh;
 
@@ -1230,7 +1230,7 @@ class maintainer
      * @param  integer Is the developer actively working on the project?
      * @return mixed True or PEAR error object
      */
-    function add($package, $user, $role, $active = 1)
+    static function add($package, $user, $role, $active = 1)
     {
         global $dbh, $pear_rest;
 
@@ -1263,7 +1263,7 @@ class maintainer
      * @param  boolean Only return lead maintainers?
      * @return array
      */
-    function get($package, $lead = false)
+    static function get($package, $lead = false)
     {
         global $dbh;
         if (is_string($package)) {
@@ -1288,7 +1288,7 @@ class maintainer
      * @param  string Handle of the user
      * @return array
      */
-    function getByUser($user)
+    static function getByUser($user)
     {
         global $dbh;
         $query = 'SELECT p.name, m.role FROM packages p, maintains m WHERE p.package_type = ? AND p.approved = 1 AND m.package = p.id AND m.handle = ?';
@@ -1305,7 +1305,7 @@ class maintainer
      * @param string Name of the role
      * @return boolean
      */
-    function isValidRole($role)
+    static function isValidRole($role)
     {
         require_once "PEAR/Common.php";
 
@@ -1327,7 +1327,7 @@ class maintainer
      * @param  string Handle of the user
      * @return True or PEAR error object
      */
-    function remove($package, $user)
+    static function remove($package, $user)
     {
         global $dbh, $auth_user;
         if (!$auth_user->isAdmin() && !user::maintains($auth_user->handle, $package, 'lead')) {
@@ -1352,7 +1352,7 @@ class maintainer
      *                     in the form: '<user>' => array('role' => '<role>', 'active' => '<active>')
      * @return mixed PEAR_Error or true
      */
-    function updateAll($pkgid, $users)
+    static function updateAll($pkgid, $users)
     {
 
         global $dbh, $auth_user;
@@ -1429,7 +1429,7 @@ class maintainer
      * @param  string Role
      * @param  string Is the developer actively working on the package?
      */
-    function update($package, $user, $role, $active) {
+    static function update($package, $user, $role, $active) {
         global $dbh;
 
         $query = "UPDATE maintains SET role = ?, active = ? " .
@@ -1446,7 +1446,7 @@ class maintainer
      * @param  int  ID of the package
      * @return boolean
      */
-    function mayUpdate($package) {
+    static function mayUpdate($package) {
         global $auth_user;
 
         $admin = $auth_user->isAdmin();
@@ -1481,7 +1481,7 @@ class release
      * @param  integer Number of releases to return
      * @return array
      */
-    function getRecent($n = 5)
+    static function getRecent($n = 5)
     {
         global $dbh;
         $sth = $dbh->limitQuery("SELECT packages.id AS id, ".
@@ -1516,7 +1516,7 @@ class release
      * @param integer Timestamp of end date
      * @return array
      */
-    function getDateRange($start,$end)
+    static function getDateRange($start,$end)
     {
         global $dbh;
 
@@ -1564,7 +1564,7 @@ class release
      * @param string Filename of the release tarball
      * @param string MD5 checksum of the tarball
      */
-    function upload($package, $version, $state, $relnotes, $tarball, $md5sum)
+    static function upload($package, $version, $state, $relnotes, $tarball, $md5sum)
     {
         global $auth_user;
         $role = user::maintains($auth_user->handle, $package);
@@ -1593,7 +1593,7 @@ class release
      * @param string MD5 checksum of the tarball
      * @return mixed
      */
-    function validateUpload($package, $version, $state, $relnotes, $tarball, $md5sum)
+    static function validateUpload($package, $version, $state, $relnotes, $tarball, $md5sum)
     {
         global $dbh, $auth_user;
         $role = user::maintains($auth_user->handle, $package);
@@ -1683,7 +1683,7 @@ class release
      * @static
      * @return string  the file name of the upload or PEAR_Error object if problems
      */
-    function confirmUpload($package, $version, $state, $relnotes, $md5sum, $package_id, $file)
+    static function confirmUpload($package, $version, $state, $relnotes, $md5sum, $package_id, $file)
     {
         require_once "PEAR/Common.php";
 
@@ -1876,7 +1876,7 @@ class release
      * @param string
      * @return boolean
      */
-    function dismissUpload($upload_ref)
+    static function dismissUpload($upload_ref)
     {
         return (bool)@unlink($upload_ref);
     }
@@ -1895,7 +1895,7 @@ class release
      * @return mixed
      * @static
      */
-    function HTTPdownload($package, $version = null, $file = null, $uncompress = false)
+    static function HTTPdownload($package, $version = null, $file = null, $uncompress = false)
     {
         global $dbh;
 
@@ -2014,7 +2014,7 @@ class release
      * @param string State
      * @return boolean
      */
-    function isValidState($state)
+    static function isValidState($state)
     {
         static $states = array('devel', 'snapshot', 'alpha', 'beta', 'stable');
         return in_array($state, $states);
@@ -2030,7 +2030,7 @@ class release
      * @param boolean include the state in the array returned
      * @return boolean
      */
-    function betterStates($state, $include = false)
+    static function betterStates($state, $include = false)
     {
         static $states = array('snapshot', 'devel', 'alpha', 'beta', 'stable');
         $i = array_search($state, $states);
@@ -2053,7 +2053,7 @@ class release
      * @param integer ID of the release
      * @param string Filename
      */
-    function logDownload($package, $release_id, $file = null)
+    static function logDownload($package, $release_id, $file = null)
     {
         global $dbh;
 
@@ -2099,7 +2099,7 @@ class release
      * @param string Filename of the new uploaded release
      * @return void
      */
-    function promote($pkginfo, $upload)
+    static function promote($pkginfo, $upload)
     {
         if ($_SERVER['SERVER_NAME'] != 'pecl.php.net') {
             return;
@@ -2153,7 +2153,7 @@ END;
      * @param string Filename of the new uploaded release
      * @return void
      */
-    function promote_v2($pkginfo, $upload)
+    static function promote_v2($pkginfo, $upload)
     {
         if ($_SERVER['SERVER_NAME'] != 'pecl.php.net') {
             return;
@@ -2207,7 +2207,7 @@ Authors
      * @param integer ID of the release
      * @return boolean
      */
-    function remove($package, $release)
+    static function remove($package, $release)
     {
         global $dbh, $auth_user;
         if (!$auth_user->isAdmin() &&
@@ -2275,7 +2275,7 @@ class note
 {
     // {{{ +proto bool   note::add(string, int, string, string) API 1.0
 
-    function add($key, $value, $note, $author = "")
+    static function add($key, $value, $note, $author = "")
     {
         global $dbh, $auth_user;
         if (empty($author)) {
@@ -2299,7 +2299,7 @@ class note
     // }}}
     // {{{ +proto bool   note::remove(int) API 1.0
 
-    function remove($id)
+    static function remove($id)
     {
         global $dbh;
         $id = (int)$id;
@@ -2313,7 +2313,7 @@ class note
     // }}}
     // {{{ +proto bool   note::removeAll(string, int) API 1.0
 
-    function removeAll($key, $value)
+    static function removeAll($key, $value)
     {
         global $dbh;
         $res = $dbh->query("DELETE FROM notes WHERE $key = ". $dbh->quote($value));
@@ -2330,7 +2330,7 @@ class user
 {
     // {{{ *proto bool   user::remove(string) API 1.0
 
-    function remove($uid)
+    static function remove($uid)
     {
         global $dbh;
         note::removeAll("uid", $uid);
@@ -2343,7 +2343,7 @@ class user
     // }}}
     // {{{ *proto bool   user::rejectRequest(string, string) API 1.0
 
-    function rejectRequest($uid, $reason)
+    static function rejectRequest($uid, $reason)
     {
         global $dbh, $auth_user;
         list($email) = $dbh->getRow('SELECT email FROM users WHERE handle = ?',
@@ -2359,7 +2359,7 @@ class user
     // }}}
     // {{{ *proto bool   user::activate(string) API 1.0
 
-    function activate($uid)
+    static function activate($uid)
     {
         global $dbh, $auth_user;
 
@@ -2392,7 +2392,7 @@ class user
     // }}}
     // {{{ +proto bool   user::isAdmin(string) API 1.0
 
-    function isAdmin($handle)
+    static function isAdmin($handle)
     {
 
 
@@ -2418,7 +2418,7 @@ class user
     // }}}
     // {{{  proto bool   user::listAdmins() API 1.0
 
-    function listAdmins()
+    static function listAdmins()
     {
         global $dbh;
 
@@ -2429,7 +2429,7 @@ class user
     // }}}
     // {{{ +proto bool   user::exists(string) API 1.0
 
-    function exists($handle)
+    static function exists($handle)
     {
         global $dbh;
         $sql = "SELECT handle FROM users WHERE handle=?";
@@ -2440,7 +2440,7 @@ class user
     // }}}
     // {{{ +proto string user::maintains(string|int, [string]) API 1.0
 
-    function maintains($user, $pkgid, $role = 'any')
+    static function maintains($user, $pkgid, $role = 'any')
     {
         global $dbh;
         $package_id = package::info($pkgid, 'id');
@@ -2459,7 +2459,7 @@ class user
     // }}}
     // {{{  proto string user::info(string, [string]) API 1.0
 
-    function info($user, $field = null)
+    static function info($user, $field = null)
     {
         global $dbh;
         if ($field === null) {
@@ -2479,7 +2479,7 @@ class user
     // }}}
     // {{{ listAll()
 
-    function listAll($registered_only = true)
+    static function listAll($registered_only = true)
     {
         global $dbh;
         $query = "SELECT * FROM users";
@@ -2500,7 +2500,7 @@ class user
      * is set to PEAR_ERROR_RETURN.
      *
      * But, during the DB_storage::set() phase error handling is set to
-     * PEAR_ERROR_CALLBACK the report_warning() function.  So, if an
+     * PEAR_ERROR_CALLBACK the report_warning() static function.  So, if an
      * error happens a warning message is printed AND the incomplete
      * user information is removed.
      *
@@ -2512,7 +2512,7 @@ class user
      *
      * @access public
      */
-    function add(&$data)
+    static function add(&$data)
     {
         global $dbh;
 
@@ -2670,7 +2670,7 @@ class user
      * @param  array User information
      * @return object Instance of PEAR_User
      */
-    function update($data) {
+    static function update($data) {
         global $dbh;
 
         $fields = array("name", "email", "homepage", "showemail", "userinfo", "pgpkeyid", "wishlist");
@@ -2698,7 +2698,7 @@ class user
      * @param  int    Number of releases (default is 10)
      * @return array
      */
-    function getRecentReleases($handle, $n = 10)
+    static function getRecentReleases($handle, $n = 10)
     {
         global $dbh;
         $recent = array();
@@ -2735,7 +2735,7 @@ class statistics
      * @param  integer ID of the package
      * @return array
      */
-    function package($id)
+    static function package($id)
     {
         global $dbh;
         $query = "SELECT SUM(dl_number) FROM package_stats WHERE pid = " . (int)$id;
@@ -2745,7 +2745,7 @@ class statistics
     // }}}
     // {{{ release()
 
-    function release($id, $rid = "")
+    static function release($id, $rid = "")
     {
         global $dbh;
 
@@ -2764,7 +2764,7 @@ class statistics
     // }}}
     // {{{ activeRelease()
 
-    function activeRelease($id, $rid = "")
+    static function activeRelease($id, $rid = "")
     {
         global $dbh;
 
@@ -2819,9 +2819,9 @@ function mail_pear_admins($subject = "PEAR Account Request", $msg, $xhdr = '')
 
 class PEAR_User extends DB_storage
 {
-    function PEAR_User(&$dbh, $user)
+    function __construct(&$dbh, $user)
     {
-        $this->DB_storage("users", "handle", $dbh);
+        parent::__construct("users", "handle", $dbh);
         $this->pushErrorHandling(PEAR_ERROR_RETURN);
         $this->setup($user);
         $this->popErrorHandling();
@@ -2844,9 +2844,9 @@ class PEAR_User extends DB_storage
 
 class PEAR_Package extends DB_storage
 {
-    function PEAR_Package(&$dbh, $package, $keycol = "id")
+    function __construct(&$dbh, $package, $keycol = "id")
     {
-        $this->DB_storage("packages", $keycol, $dbh);
+        parent::__construct("packages", $keycol, $dbh);
         $this->pushErrorHandling(PEAR_ERROR_RETURN);
         $this->setup($package);
         $this->popErrorHandling();
@@ -2858,9 +2858,9 @@ class PEAR_Package extends DB_storage
 
 class PEAR_Release extends DB_storage
 {
-    function PEAR_Release(&$dbh, $release)
+    function __construct(&$dbh, $release)
     {
-        $this->DB_storage("releases", "id", $dbh);
+        parent::__construct("releases", "id", $dbh);
         $this->pushErrorHandling(PEAR_ERROR_RETURN);
         $this->setup($release);
         $this->popErrorHandling();
@@ -2872,9 +2872,9 @@ class PEAR_Release extends DB_storage
 /*
 class PEAR_Proposal extends DB_storage
 {
-    function PEAR_Proposal(&$dbh, $package, $keycol = "id")
+    function __construct(&$dbh, $package, $keycol = "id")
     {
-        $this->DB_storage("package_proposals", $keycol, $dbh);
+        parent::__construct("package_proposals", $keycol, $dbh);
         $this->pushErrorHandling(PEAR_ERROR_RETURN);
         $this->setup($package);
         $this->popErrorHandling();
