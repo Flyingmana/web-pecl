@@ -22,7 +22,7 @@ require 'HTML/Menu.php';
 Transform the tree of categories in an assoc array
 valid for the Ulf's Menu Class
 */
-function &tree_to_menu ($tnode, $mpid) {
+function tree_to_menu ($tnode, $mpid) {
     global $tree;
     $mnode['title'] = $tree[$tnode]['name'];
     if (isset($tree[$tnode]['children'])) {
@@ -66,7 +66,7 @@ function initialize_categories_menu () {
     $menu[1]['url'] = $GLOBALS['PHP_SELF'];
 }
 
-function &get_categories_menu($type = 'tree') {
+function get_categories_menu($type = 'tree') {
     global $menu;
     if (empty($menu)) {
         initialize_categories_menu();

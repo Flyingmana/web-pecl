@@ -236,7 +236,7 @@ DEFINE("BAND_DIAGCROSS",8); // Diagonal crosses
 // The default trivial text error handler.
 //=============================================================
 class JpGraphErrObject {
-    function JpGraphErrObject() {
+    function __construct() {
 	// Empty. Reserved for future use
     }
 
@@ -407,7 +407,7 @@ class JpgTimer {
     var $idx;	
 //---------------
 // CONSTRUCTOR
-    function JpgTimer() {
+    function __construct() {
 	$this->idx=0;
     }
 
@@ -475,7 +475,7 @@ class Graph {
     //  aTimeOut	Timeout in minutes for image in cache
     // aInline		If true the image is streamed back in the call to Stroke()
     //             If false the image is just created in the cache
-    function Graph($aWidth=300,$aHeight=200,$aCachedName="",$aTimeOut=0,$aInline=true) {
+    function __construct($aWidth=300,$aHeight=200,$aCachedName="",$aTimeOut=0,$aInline=true) {
 		
 	// If timing is used create a new timing object
 	if( BRAND_TIMING ) {
@@ -1171,7 +1171,7 @@ class TTF {
     var $font_fam;
 //---------------
 // CONSTRUCTOR
-    function TTF() {
+    function __construct() {
 	// Base file names for available fonts
 	$this->font_fam=array(
 	    FF_COURIER => TTF_DIR."courier",
@@ -1263,7 +1263,7 @@ class Text {
 // CONSTRUCTOR
 
     // Create new text at absolute pixel coordinates
-    function Text($aTxt="",$aXAbsPos=0,$aYAbsPos=0) {
+    function __construct($aTxt="",$aXAbsPos=0,$aYAbsPos=0) {
 	$this->t = $aTxt;
 	$this->x = $aXAbsPos;
 	$this->y = $aYAbsPos;
@@ -1406,7 +1406,7 @@ class Grid {
     var $show=false, $showMinor=false,$weight=1;
 //---------------
 // CONSTRUCTOR
-    function Grid(&$aAxis) {
+    function __construct(&$aAxis) {
 	$this->scale = &$aAxis->scale;
 	$this->img = &$aAxis->img;
     }
@@ -1516,7 +1516,7 @@ class Axis {
     var $tick_label_margin=6;
 //---------------
 // CONSTRUCTOR
-    function Axis(&$img,&$aScale,$color=array(0,0,0)) {
+    function __construct(&$img,&$aScale,$color=array(0,0,0)) {
 	$this->img = &$img;
 	$this->scale = &$aScale;
 	$this->color = $color;
@@ -1810,7 +1810,7 @@ class Ticks {
 
 //---------------
 // CONSTRUCTOR
-    function Ticks(&$aScale) {
+    function __construct(&$aScale) {
 	$this->scale=&$aScale;
     }
 
@@ -1912,7 +1912,7 @@ class LinearTicks extends Ticks {
     var $text_label_start=0;
 //---------------
 // CONSTRUCTOR
-    function LinearTicks() {
+    function __construct() {
 	// Empty
     }
 
@@ -2131,7 +2131,7 @@ class LinearScale {
     var $intscale=false; // Restrict autoscale to integers
 //---------------
 // CONSTRUCTOR
-    function LinearScale($aMin=0,$aMax=0,$aType="y") {
+    function __construct($aMin=0,$aMax=0,$aType="y") {
 	assert($aType=="x" || $aType=="y" );
 	assert($aMin<=$aMax);
 		
@@ -2512,7 +2512,7 @@ class LinearScale {
 class RGB {
     var $rgb_table;
     var $img;
-    function RGB(&$aImg) {
+    function __construct(&$aImg) {
 	$this->img = $aImg;
 		
 	// Conversion array between color names and RGB
@@ -3043,7 +3043,7 @@ class Image {
     var $colorstack=array(),$colorstackidx=0;
     //---------------
     // CONSTRUCTOR
-    function Image($aWidth,$aHeight,$aFormat=DEFAULT_GFORMAT) {
+    function __construct($aWidth,$aHeight,$aFormat=DEFAULT_GFORMAT) {
 	$this->CreateImgCanvas($aWidth,$aHeight);
 	if( !$this->SetImgFormat($aFormat) ) {
 	    JpGraphError::Raise("JpGraph: Selected graphic format is either not supported or unknown [$aFormat]");
@@ -3987,7 +3987,7 @@ class RotImage extends Image {
     var $a=0;
     var $dx=0,$dy=0,$transx=0,$transy=0; 
 	
-    function RotImage($aWidth,$aHeight,$a=0,$aFormat=DEFAULT_GFORMAT) {
+    function __construct($aWidth,$aHeight,$a=0,$aFormat=DEFAULT_GFORMAT) {
 	$this->Image($aWidth,$aHeight,$aFormat);
 	$this->dx=$this->left_margin+$this->plotwidth/2;
 	$this->dy=$this->top_margin+$this->plotheight/2;
@@ -4284,7 +4284,7 @@ class Legend {
     var $weight=1;
 //---------------
 // CONSTRUCTOR
-    function Legend() {
+    function __construct() {
 	// Empty
     }
 //---------------
@@ -4508,7 +4508,7 @@ class Plot {
     var $value;
 //---------------
 // CONSTRUCTOR
-    function Plot(&$aDatay,$aDatax=false) {
+    function __construct(&$aDatay,$aDatax=false) {
 	$this->numpoints = count($aDatay);
 	if( $this->numpoints==0 )
 	    JpGraphError::Raise(" Empty data array specified for plot. Must have at least one data point.");
@@ -4654,7 +4654,7 @@ class PlotMark {
     var $value,$csimtarget,$csimalt,$csimareas;
 //	--------------
 // CONSTRUCTOR
-    function PlotMark() {
+    function __construct() {
 	$this->title = new Text();
 	$this->title->Hide();
 	$this->csimareas = '';
@@ -5398,7 +5398,7 @@ class PlotLine {
 
 //---------------
 // CONSTRUCTOR
-    function PlotLine($aDir=HORIZONTAL,$aPos=0,$aColor="black",$aWeight=1) {
+    function __construct($aDir=HORIZONTAL,$aPos=0,$aColor="black",$aWeight=1) {
 	$this->direction = $aDir;
 	$this->color=$aColor;
 	$this->weight=$aWeight;

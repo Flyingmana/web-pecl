@@ -2,7 +2,7 @@
 class pear_rest
 {
     var $_restdir;
-    function pear_rest($base)
+    function __construct($base)
     {
         $this->_restdir = $base;
     }

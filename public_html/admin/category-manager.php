@@ -31,7 +31,7 @@ $template_dir = dirname(__DIR__) . '/../templates/';
 /**
  * Function to recurse thru the tree adding nodes to treemenu
  */
-function parseTree(&$structure, $parent = null)
+function parseTree($structure, $parent = null)
 {
     global $dbh;
 
@@ -48,11 +48,15 @@ function parseTree(&$structure, $parent = null)
 
     if (count($categories)) {
         foreach ($categories as $cat) {
-            $newNode = &$structure->addItem(new HTML_TreeNode(array('text' => htmlspecialchars($cat['name']),
-                                                                    'icon' => 'folder.gif'), 
-                                                              array('onclick' => 'category_click(event, this, ' . $cat['id'] . ')')
-                                                              )
-                                            );
+            $newNode = $structure->addItem(
+                new HTML_TreeNode(
+                    array(
+                        'text' => htmlspecialchars($cat['name']),
+                        'icon' => 'folder.gif'
+                    ),
+                    array('onclick' => 'category_click(event, this, ' . $cat['id'] . ')')
+                )
+            );
             parseTree($newNode, $cat['id']);
         }
     }
