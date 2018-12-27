@@ -17,6 +17,17 @@
    +----------------------------------------------------------------------+
 */
 
+
+set_include_path(
+    implode(
+        PATH_SEPARATOR,
+        [
+            get_include_path(),
+            __DIR__,
+        ]
+    )
+);
+
 if (isset($_SERVER['PEAR_TMPDIR'])) {
     define('PEAR_TMPDIR', $_SERVER['PEAR_TMPDIR']);
     define('PEAR_UPLOAD_TMPDIR', $_SERVER['PEAR_TMPDIR'].'/uploads');

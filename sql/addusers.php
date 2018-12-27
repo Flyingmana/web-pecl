@@ -2,6 +2,8 @@
 
 print "Adding users...\n";
 
+require_once __DIR__ . '/../include/pear-prepend.php';
+
 $hardcoded_users = '
 alexmerz;*;Alexander Merz;;0
 chregu;*;Christian Stocker;;0
