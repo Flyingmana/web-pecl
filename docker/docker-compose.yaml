@@ -9,6 +9,8 @@ php7:
   #- ./apache2/hosts.conf:/etc/apache2/sites-enabled/hosts.conf
   environment:
   - APACHE_DOCUMENT_ROOT=/var/www/html/public_html
+  - PEAR_DATABASE_DSN=mysqli://root:MY_PASSWORD@mysql/YOUR_DATABASE_NAME
+  - PECL_DB_DSN=mysqli://root:MY_PASSWORD@mysql/YOUR_DATABASE_NAME
   ports:
   - "80:80"
   - "8180:80"
