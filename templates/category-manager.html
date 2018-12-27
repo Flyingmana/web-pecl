@@ -115,7 +115,7 @@ categories[<?php echo $c['id']; ?>] = new Array('<?php echo $c['name']; ?>', '<?
 			</div>		
 		</td>
 		<td valign="top">
-			<span class="error"><?php echo @$message; ?></span>
+			<span class="error"><?php if (isset($message)) {echo $message;} ?></span>
 
 			<form action="category-manager.php" name="category_form" method="post">
 			<input type="hidden" name="action" value="" />
