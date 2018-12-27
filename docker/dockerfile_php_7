@@ -28,7 +28,7 @@ RUN docker-php-ext-install gd
 RUN apt-get install -y libxslt-dev
 RUN docker-php-ext-install xsl
 
-RUN pear install db http
+RUN pear install db http HTML_Form HTML_Table HTML_TreeMenu pager Net_URL Net_URL2
 
 RUN a2enmod rewrite
 RUN usermod -u 1000 www-data
